@@ -3,7 +3,7 @@ import math
 import time
 import numpy as np
 
-limit = 80 #km/hr
+limit = 80 
 
 file = open("D:\VIT\SpeedRadar-OpenCV--main\SpeedRecord.txt","w")
 file.write("ID \t SPEED\n------\t-------\n")
@@ -16,8 +16,7 @@ class EuclideanDistTracker:
         self.center_points = {}
 
         self.id_count = 0
-        #self.start = 0
-        #self.stop = 0
+        
         self.et=0
         self.s1 = np.zeros((1,1000))
         self.s2 = np.zeros((1,1000))
@@ -31,13 +30,13 @@ class EuclideanDistTracker:
     def update(self, objects_rect):
         objects_bbs_ids = []
 
-        # Get center point of new object
+       
         for rect in objects_rect:
             x, y, w, h = rect
             cx = (x + x + w) // 2
             cy = (y + y + h) // 2
 
-            #CHECK IF OBJECT IS DETECTED ALREADY
+            
             same_object_detected = False
 
             for id, pt in self.center_points.items():
@@ -48,21 +47,21 @@ class EuclideanDistTracker:
                     objects_bbs_ids.append([x, y, w, h, id])
                     same_object_detected = True
 
-                    #START TIMER
+                    
                     if (y >= 410 and y <= 430):
                         self.s1[0,id] = time.time()
 
-                    #STOP TIMER and FIND DIFFERENCE
+                    
                     if (y >= 235 and y <= 255):
                         self.s2[0,id] = time.time()
                         self.s[0,id] = self.s2[0,id] - self.s1[0,id]
 
-                    #CAPTURE FLAG
+                   
                     if (y<235):
                         self.f[id]=1
 
 
-            #NEW OBJECT DETECTION
+            
             if same_object_detected is False:
                 self.center_points[self.id_count] = (cx, cy)
                 objects_bbs_ids.append([x, y, w, h, self.id_count])
@@ -71,7 +70,7 @@ class EuclideanDistTracker:
                 self.s1[0,self.id_count]=0
                 self.s2[0,self.id_count]=0
 
-        # ASSIGN NEW ID to OBJECT
+        
         new_center_points = {}
         for obj_bb_id in objects_bbs_ids:
             _, _, _, _, object_id = obj_bb_id
@@ -81,7 +80,7 @@ class EuclideanDistTracker:
         self.center_points = new_center_points.copy()
         return objects_bbs_ids
 
-    #SPEEED FUNCTION
+    
     def getsp(self,id):
         if (self.s[0,id]!=0):
             s = 214.15 / self.s[0, id]
@@ -90,7 +89,7 @@ class EuclideanDistTracker:
 
         return int(s)
 
-    #SAVE VEHICLE DATA
+   
     def capture(self,img,x,y,h,w,sp,id):
         if(self.capf[id]==0):
             self.capf[id] = 1
@@ -111,11 +110,11 @@ class EuclideanDistTracker:
             filet.close()
 
 
-    #SPEED_LIMIT
+    
     def limit(self):
         return limit
 
-    #TEXT FILE SUMMARY
+    
     def end(self):
         file = open("D:\VIT\SpeedRadar-OpenCV--main\SpeedRecord.txt", "a")
         file.write("\n-------------\n")
