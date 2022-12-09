@@ -3,7 +3,7 @@ from tracker2 import *
 import numpy as np
 end = 0
 
-#Creater Tracker Object
+
 tracker = EuclideanDistTracker()
 
 #cap = cv2.VideoCapture("Resources/traffic3.mp4")
