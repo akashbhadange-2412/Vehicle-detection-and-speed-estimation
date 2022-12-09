@@ -18,11 +18,11 @@ class EuclideanDistTracker:
         self.id_count = 0
         
         self.et=0
-        self.s1 = np.zeros((1,1000))
-        self.s2 = np.zeros((1,1000))
-        self.s = np.zeros((1,1000))
-        self.f = np.zeros(1000)
-        self.capf = np.zeros(1000)
+        self.s1 = np.zeros((1,2000))
+        self.s2 = np.zeros((1,2000))
+        self.s = np.zeros((1,2000))
+        self.f = np.zeros(2000)
+        self.capf = np.zeros(2000)
         self.count = 0
         self.exceeded = 0
 
@@ -42,7 +42,7 @@ class EuclideanDistTracker:
             for id, pt in self.center_points.items():
                 dist = math.hypot(cx - pt[0], cy - pt[1])
 
-                if dist < 70:
+                if dist < 50:
                     self.center_points[id] = (cx, cy)
                     objects_bbs_ids.append([x, y, w, h, id])
                     same_object_detected = True
@@ -83,7 +83,7 @@ class EuclideanDistTracker:
     
     def getsp(self,id):
         if (self.s[0,id]!=0):
-            s = 214.15 / self.s[0, id]
+            s = 165.15 / self.s[0, id]
         else:
             s = 0
 
