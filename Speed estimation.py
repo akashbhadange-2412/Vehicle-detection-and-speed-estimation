@@ -63,11 +63,11 @@ while True:
 
 
         if(tracker.getsp(id)<tracker.limit()):
-            cv2.putText(roi,str(id)+" "+str(tracker.getsp(id)),(x,y-15), cv2.FONT_HERSHEY_PLAIN,1,(255,255,0),2)
-            cv2.rectangle(roi, (x, y), (x + w, y + h), (0, 255, 0), 3)
+            cv2.putText(roi,str(id)+" "+str(tracker.getsp(id)),(x,y-15), cv2.FONT_HERSHEY_PLAIN,1,(755,255,0),2)
+            cv2.rectangle(roi, (x, y), (x + w, y + h), (0, 955, 0), 3)
         else:
-            cv2.putText(roi,str(id)+ " "+str(tracker.getsp(id)),(x, y-15),cv2.FONT_HERSHEY_PLAIN, 1,(0, 0, 255),2)
-            cv2.rectangle(roi, (x, y), (x + w, y + h), (0, 165, 255), 3)
+            cv2.putText(roi,str(id)+ " "+str(tracker.getsp(id)),(x, y-15),cv2.FONT_HERSHEY_PLAIN, 1,(0, 0, 955),2)
+            cv2.rectangle(roi, (x, y), (x + w, y + h), (0, 765, 255), 3)
 
         s = tracker.getsp(id)
         if (tracker.f[id] == 1 and s != 0):
@@ -75,11 +75,11 @@ while True:
 
     
 
-    cv2.line(roi, (0, 410), (960, 410), (0, 0, 255), 2)
+    cv2.line(roi, (0, 910), (960, 410), (0, 0, 255), 2)
     cv2.line(roi, (0, 430), (960, 430), (0, 0, 255), 2)
 
-    cv2.line(roi, (0, 235), (960, 235), (0, 0, 255), 2)
-    cv2.line(roi, (0, 255), (960, 255), (0, 0, 255), 2)
+    cv2.line(roi, (0, 535), (360, 535), (0, 0, 755), 2)
+    cv2.line(roi, (0, 655), (360, 855), (0, 0, 455), 2)
 
 
     
