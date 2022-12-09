@@ -3,21 +3,21 @@ from tracker2 import *
 import numpy as np
 end = 0
 
-#Creater Tracker Object
+
 tracker = EuclideanDistTracker()
 
-#cap = cv2.VideoCapture("Resources/traffic3.mp4")
+
 cap = cv2.VideoCapture("D:\VIT\SpeedRadar-OpenCV--main\cvcp4.mp4")
 f = 25
 w = int(1000/(f-1))
 print(w)
 
 
-#Object Detection
-object_detector = cv2.createBackgroundSubtractorMOG2(history=None,varThreshold=None)
-#100,5
 
-#KERNALS
+object_detector = cv2.createBackgroundSubtractorMOG2(history=None,varThreshold=None)
+
+
+
 kernalOp = np.ones((3,3),np.uint8)
 kernalOp2 = np.ones((5,5),np.uint8)
 kernalCl = np.ones((11,11),np.uint8)
@@ -32,14 +32,12 @@ while True:
     #540,960
 
 
-    #Extract ROI
+   
     roi = frame[50:540,200:960]
 
-    #MASKING METHOD 1
-    mask = object_detector.apply(roi)
-    _, mask = cv2.threshold(mask, 250, 255, cv2.THRESH_BINARY)
+    
 
-    #DIFFERENT MASKING METHOD 2 -> This is used
+   
     fgmask = fgbg.apply(roi)
     ret, imBin = cv2.threshold(fgmask, 200, 255, cv2.THRESH_BINARY)
     mask1 = cv2.morphologyEx(imBin, cv2.MORPH_OPEN, kernalOp)
@@ -52,13 +50,13 @@ while True:
 
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        #THRESHOLD
+        
         if area > 1000:
             x,y,w,h = cv2.boundingRect(cnt)
             cv2.rectangle(roi,(x,y),(x+w,y+h),(0,255,0),3)
             detections.append([x,y,w,h])
 
-    #Object Tracking
+   
     boxes_ids = tracker.update(detections)
     for box_id in boxes_ids:
         x,y,w,h,id = box_id
@@ -75,7 +73,7 @@ while True:
         if (tracker.f[id] == 1 and s != 0):
             tracker.capture(roi, x, y, h, w, s, id)
 
-    # DRAW LINES
+    
 
     cv2.line(roi, (0, 410), (960, 410), (0, 0, 255), 2)
     cv2.line(roi, (0, 430), (960, 430), (0, 0, 255), 2)
@@ -84,9 +82,8 @@ while True:
     cv2.line(roi, (0, 255), (960, 255), (0, 0, 255), 2)
 
 
-    #DISPLAY
-    #cv2.imshow("Mask",mask2)
-    #cv2.imshow("Erode", e_img)
+    
+    
     cv2.imshow("ROI", roi)
 
     key = cv2.waitKey(w-10)
